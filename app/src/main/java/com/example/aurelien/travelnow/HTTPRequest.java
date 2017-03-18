@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Created by martin on 18/03/17.
@@ -65,6 +66,7 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
     public void doStationRequest(String stationName){
 
         StationRequest sr = new StationRequest(stationName);
+        List<Location> list;
 
         try {
             URL url = new URL(sr.toStringRequest());
@@ -83,6 +85,10 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
                     next_char = is.read();
                 }
                 Log.v("MY APP", sb.toString());
+
+                list = Location.locationList(sb.toString());
+
+
             } catch (IOException e) {
                 Log.e("MY APP", e.toString());
             }
