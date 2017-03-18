@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new HTTPRequest().execute("http://perdu.com");
+        new HTTPRequest().execute("Lausanne");
     }
 
     public void buttonClicked(View view){
