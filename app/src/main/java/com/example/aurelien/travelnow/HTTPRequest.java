@@ -1,23 +1,14 @@
 package com.example.aurelien.travelnow;
 
 import android.os.AsyncTask;
-import android.util.JsonWriter;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -107,7 +98,7 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
     public void doPathRequest(String from, String to, String date, String time){
         PathRequest pr = new PathRequest(from, to, date, time);
         List<Connection> list = Connection.connectionList(doRequest(pr));
-        Log.v("MY APP", doRequest(pr));
+        Log.v("MY APP", ""+list.get(0).getScore());
     }
 
     private class Message {

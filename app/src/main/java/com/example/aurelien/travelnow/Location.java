@@ -37,14 +37,22 @@ public class Location {
     }
 
     public Location(String json_string){
+        JSONObject parser;
         try {
-            JSONObject parser = new JSONObject(json_string);
+            parser = new JSONObject(json_string);
             this.id = parser.getInt("id");
             this.name = parser.getString("name");
             this.coordinate = new Coordinate(parser.getString("coordinate")); // TODO
-            this.distance = parser.getInt("distance");
-            this.score = parser.getInt("score");
-
+            try {
+                this.distance = parser.getInt("distance");
+            } catch (JSONException e) {
+                distance = -1;
+            }
+            try{
+                this.score = parser.getInt("score");
+            } catch (JSONException e){
+                this.score = -1;
+            }
         } catch (JSONException e) {
             System.err.println("Error parsing JSON: " + json_string);
             System.err.println(e.toString());

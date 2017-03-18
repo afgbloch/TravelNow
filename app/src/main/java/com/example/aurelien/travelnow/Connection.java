@@ -14,7 +14,9 @@ import java.util.List;
 public class Connection {
     Checkpoint from;
     Checkpoint to;
-    String duration;
+    int duration_day;
+    int duration_hour;
+    int duration_min;
     Service service;
     List<String> product;
     int capa_first_class;
@@ -44,7 +46,12 @@ public class Connection {
             JSONObject parser = new JSONObject(json_string);
             this.from = new Checkpoint(parser.getString("from").toString());
             this.to = new Checkpoint(parser.getString("to").toString());
-            this.duration = parser.getString("duration");
+            String nb_day = parser.getString("duration").substring(0, 2);
+            String nb_hours = parser.getString("duration").substring(3, 5);
+            String nb_min = parser.getString("duration").substring(6, 8);
+            this.duration_day = Integer.parseInt(nb_day);
+            this.duration_hour = Integer.parseInt(nb_hours);
+            this.duration_min = Integer.parseInt(nb_min);
             this.service = new Service(parser.getString("service").toString());
 
             JSONArray product_array = parser.getJSONArray("products");
@@ -67,5 +74,9 @@ public class Connection {
             System.err.println("Error parsing JSON: " + json_string);
             System.err.println(e.toString());
         }
+    }
+
+    public int getScore() {
+        return this.duration_day*10000 + this.duration_hour*100 + this.duration_min;
     }
 }
