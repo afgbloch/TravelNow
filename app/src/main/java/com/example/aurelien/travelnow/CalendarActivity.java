@@ -80,20 +80,22 @@ public class CalendarActivity extends Activity
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
-        mCallApiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
-                getResultsFromApi();
-                mCallApiButton.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton);
-
+//
+//        mCallApiButton = new Button(this);
+//        mCallApiButton.setText(BUTTON_TEXT);
+//        mCallApiButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mCallApiButton.setEnabled(false);
+//                mOutputText.setText("");
+//                getResultsFromApi();
+//                mCallApiButton.setEnabled(true);
+//            }
+//        });
+//        activityLayout.addView(mCallApiButton);
+        if (! isGooglePlayServicesAvailable()) {
+            acquireGooglePlayServices();
+        }
         mOutputText = new TextView(this);
         mOutputText.setLayoutParams(tlp);
         mOutputText.setPadding(16, 16, 16, 16);
@@ -358,10 +360,14 @@ public class CalendarActivity extends Activity
             Events events = mService.events().list("primary")
                     .setMaxResults(10)
                     .setTimeMin(now)
+//                    .setTimeMax()
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
             List<Event> items = events.getItems();
+
+            items.get(0).getLocation();
+//            mService.calendarList().
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
