@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ConstraintSolver {
 
-    Calendar departure = Calendar.getInstance();
-    Calendar arrival = Calendar.getInstance();
+    String departure_day, departure_h;
+    String arrival_day, arrival_h;
     String departurePlace;
     String arrivalPlace;
 
@@ -22,8 +22,10 @@ public class ConstraintSolver {
                             int departureDay, int departureHour, int departureMin,
                             String arrivalPlace, int arrivalYear, int arrivalMonth, int arrivalDay,
                             int arrivalHour, int arrivalMin) {
-        this.departure.set(departureYear,departureMonth, departureDay, departureHour, departureMin);
-        this.arrival.set(arrivalYear, arrivalMonth, arrivalDay, arrivalHour, arrivalMin);
+        this.departure_day = ""+departureYear+"-"+departureMonth+"-"+departureDay;
+        this.departure_h = ""+departureHour+":"+departureMin;
+        this.arrival_day = ""+arrivalYear+"-"+arrivalMonth+"-"+arrivalDay;
+        this.arrival_h = ""+arrivalHour+":"+arrivalMin;
         this.arrivalPlace = arrivalPlace;
         this.departurePlace = departurePlace;
     }
@@ -31,9 +33,9 @@ public class ConstraintSolver {
     public Connection getConnection() {
         DateFormat df_day = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat df_hour = new SimpleDateFormat("hh:mm");
-        HTTPRequest request = new HTTPRequest();
+        HTTPRequest request = new HTTPRequest();;
         List<Connection> list = request.doPathRequest(departurePlace, arrivalPlace,
-                df_day.format(arrival.getTime()), df_hour.format(arrival.getTime()));
+                arrival_day, arrival_h);
 
         list.sort(new Comparator<Connection>() {
             @Override

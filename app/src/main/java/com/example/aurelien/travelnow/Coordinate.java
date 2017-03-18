@@ -11,6 +11,11 @@ public class Coordinate {
     double longitude;
     double latitude;
 
+    public Coordinate(double latitude, double longitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Coordinate(String json_string){
         try {
             JSONObject parser = new JSONObject(json_string);

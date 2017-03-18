@@ -13,6 +13,13 @@ public class Checkpoint {
     String departure;
     int platform;
 
+    public Checkpoint(Location station, String arrival, String departure, int platform) {
+        this.station = station;
+        this.arrival = arrival;
+        this.departure = departure;
+        this.platform = platform;
+    }
+
     public Checkpoint(String json_string){
         try{
             JSONObject parser = new JSONObject(json_string);

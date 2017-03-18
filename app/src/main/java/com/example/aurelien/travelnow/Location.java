@@ -18,6 +18,14 @@ public class Location {
     private Coordinate coordinate;
     private int distance;
 
+    public Location(int id, String name, int score, Coordinate coordinate, int distance){
+        this.id = id;
+        this.name = name;
+        this.score = score;
+        this.coordinate = new Coordinate(coordinate.latitude, coordinate.longitude);
+        this.distance = distance;
+    }
+
     static public List<Location> locationList(String json_array){
         List<Location> toReturn = new LinkedList<>();
 

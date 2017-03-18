@@ -14,6 +14,13 @@ public class Section {
     Checkpoint departure;
     Checkpoint arrival;
 
+    public Section(Journey journey, int walk, Checkpoint departure, Checkpoint arrival) {
+        this.journey = journey;
+        this.walk = walk;
+        this.departure = departure;
+        this.arrival = arrival;
+    }
+
     public Section(String json_string) {
         try {
             JSONObject parser = new JSONObject(json_string);
