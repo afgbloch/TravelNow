@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TravelNow</string>
+    <string name="calendar">Go to calendar!!!</string>
 </resources>
