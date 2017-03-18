@@ -15,14 +15,7 @@ import java.util.List;
  * Created by martin on 18/03/17.
  */
 
-public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
-
-    @Override
-    protected Boolean doInBackground(String... params) {
-        doPathRequest(params[0], params[1], params[2], params[3]);
-
-        return new Boolean(true);
-    }
+public class HTTPRequest {
 
     private void request(String urlString){
         try {
@@ -95,10 +88,12 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
         List<Location> list = Location.locationList(doRequest(sr));
     }
 
-    public void doPathRequest(String from, String to, String date, String time){
+    public List<Connection> doPathRequest(String from, String to, String date, String time){
         PathRequest pr = new PathRequest(from, to, date, time);
         List<Connection> list = Connection.connectionList(doRequest(pr));
         Log.v("MY APP", ""+list.get(0).getScore());
+
+        return list;
     }
 
     private class Message {
