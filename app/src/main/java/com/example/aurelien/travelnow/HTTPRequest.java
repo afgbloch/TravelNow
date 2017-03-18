@@ -88,6 +88,11 @@ public class HTTPRequest {
         List<Location> list = Location.locationList(doRequest(sr));
     }
 
+    public String doPointOfInterest(String interestName){
+        InterestPointRequest ir = new InterestPointRequest(interestName);
+        return doRequest(ir);
+    }
+
     public List<Connection> doPathRequest(String from, String to, String date, String time){
         PathRequest pr = new PathRequest(from, to, date, time);
         List<Connection> list = Connection.connectionList(doRequest(pr));
@@ -118,7 +123,14 @@ public class HTTPRequest {
     private class StationRequest extends LocationRequest {
         public StationRequest(String name) {
             super();
-            super.str += "?query="+name;
+            super.str += "?query="+name+"&type=station";
+        }
+    }
+
+    private class InterestPointRequest extends LocationRequest {
+        public InterestPointRequest(String name) {
+            super();
+            super.str += "?query="+name+"&type=poi";
         }
     }
 

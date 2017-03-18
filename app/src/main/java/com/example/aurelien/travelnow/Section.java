@@ -1,5 +1,9 @@
 package com.example.aurelien.travelnow;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by martin on 18/03/17.
  */
@@ -11,6 +15,13 @@ public class Section {
     Checkpoint arrival;
 
     public Section(String json_string) {
-
+        try {
+            JSONObject parser = new JSONObject(json_string);
+            this.departure = new Checkpoint(parser.getString("departure"));
+            this.arrival = new Checkpoint(parser.getString("arrival"));
+            this.walk = parser.getInt("walk");
+        } catch (JSONException e) {
+            System.err.println(e.toString());
+        }
     }
 }

@@ -1,9 +1,16 @@
 package com.example.aurelien.travelnow;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,5 +85,43 @@ public class Connection {
 
     public int getScore() {
         return this.duration_day*10000 + this.duration_hour*100 + this.duration_min;
+    }
+
+    public List<Location> getWaitingLocations(int waitingMS){
+        List<Location> toReturn = new LinkedList<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZZZZZ");
+
+        for(int i = 0 ; i < this.sections.size(); i++)
+        {
+            Location st_d = this.sections.get(i).departure.station;
+            Location st_a = this.sections.get(i).arrival.station;
+            if(st_d.equals(st_a)) {
+                try {
+                    String arr_s = this.sections.get(i).arrival.arrival;
+                    String dep_s = this.sections.get(i).departure.departure;
+                    Calendar arr = Calendar.getInstance();
+                    Date t = df.parse(arr_s);
+                    arr.setTime(t);
+                    Calendar dep = Calendar.getInstance();
+                    t = df.parse(dep_s);
+                    dep.setTime(t);
+
+                    Calendar dep2 = (Calendar) arr.clone();
+                    dep2.setTime(t);
+                    dep2.setTimeInMillis(dep2.getTimeInMillis() + waitingMS);
+
+                    if(dep2.before(arr)) {
+                        // Find activity nearby
+                        String m = "There is time in "+this.sections.get(i).departure.station.toString();
+                        m+=": arrival at "+arr_s + " and departure at " + dep_s;
+                        Log.v("MY APP", m);
+                        toReturn.add(this.sections.get(i).departure.station);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return toReturn;
     }
 }
