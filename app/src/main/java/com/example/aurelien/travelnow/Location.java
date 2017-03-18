@@ -41,9 +41,9 @@ public class Location {
             JSONObject parser = new JSONObject(json_string);
             this.id = parser.getInt("id");
             this.name = parser.getString("name");
-            this.score = parser.getInt("score");
-            this.coordinate = null; // TODO
+            this.coordinate = new Coordinate(parser.getString("coordinate")); // TODO
             this.distance = parser.getInt("distance");
+            this.score = parser.getInt("score");
 
         } catch (JSONException e) {
             System.err.println("Error parsing JSON: " + json_string);

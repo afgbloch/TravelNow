@@ -28,7 +28,7 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... params) {
-        doStationRequest(params[0]);
+        doPathRequest(params[0], params[1], params[2], params[3]);
 
         return new Boolean(true);
     }
@@ -63,14 +63,11 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
         }
     }
 
-    public void doStationRequest(String stationName){
-
-        StationRequest sr = new StationRequest(stationName);
-        List<Location> list;
-
+    public String doRequest(Message m){
+        String toReturn="";
         try {
-            URL url = new URL(sr.toStringRequest());
-            Log.v("MY APP", "Request : " + sr.toStringRequest());
+            URL url = new URL(m.toStringRequest());
+            Log.v("MY APP", "Request : " + m.toStringRequest());
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -85,10 +82,7 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
                     next_char = is.read();
                 }
                 Log.v("MY APP", sb.toString());
-
-                list = Location.locationList(sb.toString());
-
-
+                toReturn = sb.toString();
             } catch (IOException e) {
                 Log.e("MY APP", e.toString());
             }
@@ -101,6 +95,19 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
         } catch (IOException e) {
             Log.e("MY APP", e.toString());
         }
+
+        return toReturn;
+    }
+
+    public void doStationRequest(String stationName){
+        StationRequest sr = new StationRequest(stationName);
+        List<Location> list = Location.locationList(doRequest(sr));
+    }
+
+    public void doPathRequest(String from, String to, String date, String time){
+        PathRequest pr = new PathRequest(from, to, date, time);
+        List<Connection> list = Connection.connectionList(doRequest(pr));
+        Log.v("MY APP", doRequest(pr));
     }
 
     private class Message {
@@ -110,7 +117,7 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
             str = "http://transport.opendata.ch/v1/";
         }
 
-        public String toStringRequest() {
+        public final String toStringRequest() {
             return str;
         }
     }
@@ -126,6 +133,20 @@ public class HTTPRequest extends AsyncTask<String, Void, Boolean> {
         public StationRequest(String name) {
             super();
             super.str += "?query="+name;
+        }
+    }
+
+    private class ConnectionRequest extends Message {
+        public ConnectionRequest() {
+            super();
+            super.str += "connections";
+        }
+    }
+
+    private class PathRequest extends ConnectionRequest {
+        public PathRequest(String from, String to, String date, String arrivalTime) {
+            super();
+            super.str += "?from="+from+"&to="+to+"&date="+date+"&time="+arrivalTime+"&isArrivalTime=1";
         }
     }
 }
