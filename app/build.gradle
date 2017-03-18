@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,4 +34,5 @@ dependencies {
     compile('com.google.apis:google-api-services-calendar:v3-rev237-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+    compile 'com.android.support:multidex:1.0.0'
 }
