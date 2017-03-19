@@ -3,12 +3,6 @@ package com.example.aurelien.travelnow;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by martin on 18/03/17.
  */

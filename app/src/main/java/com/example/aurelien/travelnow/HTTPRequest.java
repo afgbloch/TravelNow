@@ -51,10 +51,7 @@ public class HTTPRequest {
         String toReturn="";
         try {
             URL url = new URL(m.toStringRequest());
-            Log.v("MY APP", "Request : " + m.toStringRequest());
-
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
 
             try {
                 InputStream is = new BufferedInputStream(urlConnection.getInputStream());

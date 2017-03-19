@@ -14,7 +14,9 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new DummyAsyncTask().execute();
+        new DBAccess().execute();
+        new PortListener().execute();
+
     }
 
     public void buttonClicked(View view){

@@ -35,4 +35,5 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.github.scribejava:scribejava-core:4.0.0'
 }
